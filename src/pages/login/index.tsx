@@ -1,21 +1,21 @@
 import { GetServerSideProps } from 'next';
 import { unstable_getServerSession } from 'next-auth';
 
-import { LastPosts } from '@/modules/forum';
+import { Login as AuthLogin } from '@/modules/auth';
 
-import { authOptions } from './api/auth/[...nextauth]';
+import { authOptions } from '../api/auth/[...nextauth]';
 
-export default function Home() {
-  return <LastPosts />;
+export default function Login() {
+  return <AuthLogin />;
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await unstable_getServerSession(req, res, authOptions);
 
-  if (!session?.user) {
+  if (session?.user) {
     return {
       redirect: {
-        destination: '/login',
+        destination: '/',
         permanent: false,
       },
     };
