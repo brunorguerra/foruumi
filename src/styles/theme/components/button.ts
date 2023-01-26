@@ -30,7 +30,7 @@ const customVariant = ({
 const buttonStyle = {
   variants: {
     // Custom variants
-    '@primary': (props) =>
+    '@primary': (props: any) =>
       customVariant({
         bg: mode('primary.400', 'brand.300')(props),
         bgHover: mode('brand.600', 'brand.400')(props),
@@ -38,7 +38,7 @@ const buttonStyle = {
         color: mode('white', 'brand.900')(props),
         boxShadowFocus: 'none',
       }),
-    '@secondary': (props) =>
+    '@secondary': (props: any) =>
       customVariant({
         bg: mode('blue.300', 'brand.800')(props),
         bgHover: mode('brand.100', 'brand.700')(props),
@@ -47,7 +47,7 @@ const buttonStyle = {
         colorHover: mode('brand.700', 'brand.100')(props),
         boxShadowFocus: 'none',
       }),
-    '@danger': (props) =>
+    '@danger': (props: any) =>
       customVariant({
         bg: mode('error.50', 'error.900')(props),
         bgHover: mode('error.100', 'error.800')(props),
@@ -56,7 +56,7 @@ const buttonStyle = {
         colorHover: mode('error.700', 'error.100')(props),
         boxShadowFocus: 'none',
       }),
-    '@warning': (props) =>
+    '@warning': (props: any) =>
       customVariant({
         bg: mode('warning.50', 'warning.900')(props),
         bgHover: mode('warning.100', 'warning.800')(props),
@@ -67,7 +67,7 @@ const buttonStyle = {
       }),
 
     // Default variants
-    solid: (props) => ({
+    solid: (props: any) => ({
       bg:
         props.colorScheme === 'gray'
           ? mode('gray.100', 'whiteAlpha.100')(props)
@@ -79,7 +79,7 @@ const buttonStyle = {
             : `${props.colorScheme}.700`,
       },
     }),
-    ghost: (props) => ({
+    ghost: (props: any) => ({
       bg: transparentize(`${props.colorScheme}.50`, 0.05)(props.theme),
       _hover: {
         bg: transparentize(`${props.colorScheme}.50`, 0.15)(props.theme),

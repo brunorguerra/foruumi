@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --fix",
+    "prettier": "prettier --ignore-path .gitignore --write \"**/*.+(js|json|ts|tsx)\"",
     "type-check": "tsc --project tsconfig.json --pretty --noEmit",
     "husky-init": "husky install && husky set .husky/pre-commit \"npm run type-check && npm run lint && npm run prettier --write .\""
   },
