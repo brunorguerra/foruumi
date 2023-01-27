@@ -7,5 +7,5 @@ export type PostProps = {
   author: {
     name: string;
   };
-  comments: CommentProps[];
+  Comment: CommentProps[];
 };

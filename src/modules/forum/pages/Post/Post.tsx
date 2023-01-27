@@ -30,7 +30,7 @@ export const Post = ({ postId }: { postId: string }) => {
     setIsCommenting((oldState) => !oldState);
   }
 
-  const isEmptyCommentList = (data?.comments.length ?? 0) <= 0;
+  const isEmptyCommentList = (data?.Comment.length ?? 0) <= 0;
 
   if (isFetching) {
     return (
@@ -103,7 +103,7 @@ export const Post = ({ postId }: { postId: string }) => {
             ) : isEmptyCommentList ? (
               <Text mx="auto">Sem comentários</Text>
             ) : (
-              data?.comments.map((comment) => {
+              data?.Comment.map((comment) => {
                 return (
                   <Comment
                     key={comment.id}

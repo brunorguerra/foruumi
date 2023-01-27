@@ -28,7 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         },
       },
 
-      comments: {
+      Comment: {
         select: {
           content: true,
           createdAt: true,

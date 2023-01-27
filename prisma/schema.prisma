@@ -24,7 +24,7 @@ model Post {
   createdAt DateTime  @default(now())
   title     String
   content   String?
-  comments  Comment[]
+  Comment   Comment[]
 
   author  User   @relation(fields: [user_id], references: [id])
   user_id String @db.ObjectId
