@@ -17,14 +17,31 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     where: {
       id: postId as string,
     },
-    include: {
-      Comment: true,
-      author: true,
+    select: {
+      title: true,
+      content: true,
+      createdAt: true,
+      author: {
+        select: {
+          name: true,
+        },
+      },
+      comments: {
+        select: {
+          content: true,
+          createdAt: true,
+          author: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
     },
   });
 
   if (!post) {
-    return res.status(404).end();
+    return res.status(400).json({ message: 'Post not found.' });
   }
 
   return res.status(200).json({ post });

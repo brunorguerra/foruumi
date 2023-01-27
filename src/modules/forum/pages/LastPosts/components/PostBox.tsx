@@ -1,10 +1,13 @@
 import { Box, Flex, Heading, Text } from '@chakra-ui/react';
+import ptBR from 'date-fns/locale/pt-BR';
+
+import { publishedDateFormatted } from '@/modules/forum/utils';
 
 interface PostBoxProps {
   title: string;
   content: string;
   author: string;
-  createdAt?: string;
+  createdAt: string;
 }
 
 export const PostBox = ({ title, content, author, createdAt }: PostBoxProps) => {
@@ -24,7 +27,7 @@ export const PostBox = ({ title, content, author, createdAt }: PostBoxProps) => 
     >
       <Flex alignItems="center" justifyContent="space-between">
         <Text fontSize="md">Author: {author}</Text>
-        <Text>{createdAt}</Text>
+        <Text>{publishedDateFormatted(createdAt, ptBR)}</Text>
       </Flex>
 
       <Heading size="lg" marginTop={2}>
