@@ -1,4 +1,5 @@
 import { GetServerSideProps } from 'next';
+import Head from 'next/head';
 import { unstable_getServerSession } from 'next-auth';
 
 import { Login as AuthLogin } from '@/modules/auth';
@@ -6,7 +7,14 @@ import { Login as AuthLogin } from '@/modules/auth';
 import { authOptions } from '../api/auth/[...nextauth]';
 
 export default function Login() {
-  return <AuthLogin />;
+  return (
+    <>
+      <Head>
+        <title>Foruumi - Fazer login na plataforma</title>
+      </Head>
+      <AuthLogin />
+    </>
+  );
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {

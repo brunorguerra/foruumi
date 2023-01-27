@@ -1,4 +1,5 @@
 import { GetServerSideProps } from 'next';
+import Head from 'next/head';
 import { unstable_getServerSession } from 'next-auth';
 
 import { LastPosts } from '@/modules/forum';
@@ -6,7 +7,15 @@ import { LastPosts } from '@/modules/forum';
 import { authOptions } from './api/auth/[...nextauth]';
 
 export default function Home() {
-  return <LastPosts />;
+  return (
+    <>
+      <Head>
+        <title>Foruumi - Página inicial</title>
+      </Head>
+
+      <LastPosts />
+    </>
+  );
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
