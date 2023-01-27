@@ -17,6 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     where: {
       id: postId as string,
     },
+
     select: {
       title: true,
       content: true,
@@ -26,6 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           name: true,
         },
       },
+
       comments: {
         select: {
           content: true,
