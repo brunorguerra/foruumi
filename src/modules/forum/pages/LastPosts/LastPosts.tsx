@@ -60,7 +60,7 @@ export const LastPosts = () => {
       </Heading>
       <Flex direction="column" gap={4}>
         {isLoading ? (
-          <Spinner mx="auto" mt={8} />
+          <Spinner mx="auto" mt={8} size="lg" />
         ) : isEmptyListPosts ? (
           <Text fontSize="lg" mx="auto" mt={8}>
             Nenhum post foi publicado.

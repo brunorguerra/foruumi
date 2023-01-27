@@ -1,4 +1,7 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
+import ptBR from 'date-fns/locale/pt-BR';
+
+import { publishedDateFormatted } from '@/modules/forum/utils';
 
 interface CommentProps {
   author: string;
@@ -20,7 +23,7 @@ export const Comment = ({ author, createdAt, content }: CommentProps) => {
         <Text fontSize="xl" fontWeight="bold" textTransform="capitalize">
           {author}:
         </Text>
-        <Text>{createdAt}</Text>
+        <Text>{publishedDateFormatted(createdAt, ptBR)}</Text>
       </Flex>
 
       <Text fontSize="xl" marginTop={2}>
