@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Text, Textarea, useToast } from '@chakra-ui/react';
+import { Button, Flex, useToast } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { api } from '@/lib/axios';
+import { TextAreaForm } from '@/modules/forum/components';
 
 import { createCommentFormSchema } from './schema';
 
@@ -64,29 +65,18 @@ export const CreateComment = () => {
     return await res.data;
   }
 
-  async function handleCreateComment(data: CreateCommentFormData) {
+  async function handleMutateSubmit(data: CreateCommentFormData) {
     await mutateAsync(data);
   }
 
   return (
-    <Flex as="form" direction="column" gap={4} onSubmit={handleSubmit(handleCreateComment)}>
-      <Box>
-        <Textarea
-          placeholder="O que você esta pensando?"
-          backgroundColor="transparent"
-          resize="none"
-          minH={40}
-          errorBorderColor="red.500"
-          isInvalid={!!errors.content?.message}
-          {...register('content')}
-        />
+    <Flex as="form" direction="column" gap={4} onSubmit={handleSubmit(handleMutateSubmit)}>
+      <TextAreaForm
+        placeholder="O que você esta pensando?"
+        error={errors.content}
+        {...register('content')}
+      />
 
-        {errors.content?.message && (
-          <Text fontSize="md" color="red.500">
-            {errors.content.message}
-          </Text>
-        )}
-      </Box>
       <Button
         type="submit"
         ml="auto"

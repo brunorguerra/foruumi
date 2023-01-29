@@ -4,6 +4,7 @@ import ptBR from 'date-fns/locale/pt-BR';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useState } from 'react';
+import { IoReturnDownBackSharp } from 'react-icons/io5';
 
 import { api } from '@/lib/axios';
 
@@ -17,7 +18,7 @@ import { PostProps } from './types';
 export const Post = ({ postId }: { postId: string }) => {
   const [isCommenting, setIsCommenting] = useState(false);
 
-  const { data, isFetching } = useQuery(['post'], getPostData);
+  const { data, isLoading, isFetching, isError } = useQuery(['post'], getPostData);
 
   async function getPostData(): Promise<PostProps> {
     const res = await api.get(`/posts/${postId}`);
@@ -32,7 +33,7 @@ export const Post = ({ postId }: { postId: string }) => {
 
   const isEmptyCommentList = (data?.Comment.length ?? 0) <= 0;
 
-  if (isFetching) {
+  if (isLoading) {
     return (
       <>
         <Head>
@@ -49,6 +50,33 @@ export const Post = ({ postId }: { postId: string }) => {
     );
   }
 
+  if (isError) {
+    return (
+      <>
+        <Head>
+          <title>Foruumi - Postagem indisponível</title>
+        </Head>
+
+        <Box maxW={1200} mx="auto" py={8}>
+          <Header />
+
+          <Flex direction="column" alignItems="center" justifyContent="center" h={500} gap={4}>
+            <Heading>Postagem Indisponível</Heading>
+            <Text fontSize="xl">
+              Este Post pode ter sido removido ou está temporariamente indisponível.
+            </Text>
+
+            <Link href="/">
+              <Button leftIcon={<IoReturnDownBackSharp fontSize={20} />} mt={16} colorScheme="blue">
+                Voltar
+              </Button>
+            </Link>
+          </Flex>
+        </Box>
+      </>
+    );
+  }
+
   return (
     <>
       <Head>
@@ -59,7 +87,7 @@ export const Post = ({ postId }: { postId: string }) => {
         <Header />
 
         <Link href="/">
-          <Button mt={16} colorScheme="blue">
+          <Button leftIcon={<IoReturnDownBackSharp fontSize={20} />} mt={16} colorScheme="blue">
             Voltar
           </Button>
         </Link>
