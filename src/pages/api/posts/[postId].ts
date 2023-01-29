@@ -13,38 +13,42 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(400).end();
   }
 
-  const post = await prisma.post.findUnique({
-    where: {
-      id: postId as string,
-    },
-
-    select: {
-      title: true,
-      content: true,
-      createdAt: true,
-      author: {
-        select: {
-          name: true,
-        },
+  try {
+    const post = await prisma.post.findUnique({
+      where: {
+        id: postId as string,
       },
 
-      Comment: {
-        select: {
-          content: true,
-          createdAt: true,
-          author: {
-            select: {
-              name: true,
+      select: {
+        title: true,
+        content: true,
+        createdAt: true,
+        author: {
+          select: {
+            name: true,
+          },
+        },
+
+        Comment: {
+          select: {
+            content: true,
+            createdAt: true,
+            author: {
+              select: {
+                name: true,
+              },
             },
           },
         },
       },
-    },
-  });
+    });
 
-  if (!post) {
-    return res.status(400).json({ message: 'Post not found.' });
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found.' });
+    }
+
+    return res.status(200).json({ post });
+  } catch (error) {
+    return res.status(400).json({ message: 'Ocurred error at find post.' });
   }
-
-  return res.status(200).json({ post });
 }

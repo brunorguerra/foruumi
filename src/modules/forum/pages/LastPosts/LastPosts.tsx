@@ -1,7 +1,8 @@
-import { Box, Button, Flex, Heading, Spinner, Text } from '@chakra-ui/react';
+import { Box, Flex, Heading, IconButton, Spinner, Text } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useState } from 'react';
+import { IoChevronBack, IoChevronForward } from 'react-icons/io5';
 
 import { api } from '@/lib/axios';
 import { PostProps } from '@/modules/forum/types/Post';
@@ -30,20 +31,22 @@ export const LastPosts = () => {
     },
   );
 
+  const isEmptyListPosts = (data?.posts.length ?? 0) <= 0;
+  const isExistsNextPage = !(currentPage >= Number(data?.info.pages));
+  const isExistsBackPage = !(currentPage === 1);
+
   async function getListPosts(page: number): Promise<ListPostsProps> {
     const req = await api.get(`/posts?page=${page}`);
     const data = await req.data;
     return data;
   }
 
-  const isEmptyListPosts = (data?.posts.length ?? 0) <= 0;
-
   function backPage() {
-    setCurrentPage((oldPage) => (oldPage <= 1 ? oldPage : oldPage - 1));
+    setCurrentPage((oldPage) => (isExistsBackPage ? oldPage - 1 : oldPage));
   }
 
   function nextPage() {
-    setCurrentPage((oldPage) => (oldPage >= Number(data?.info.pages) ? oldPage : oldPage + 1));
+    setCurrentPage((oldPage) => (isExistsNextPage ? oldPage + 1 : oldPage));
   }
 
   return (
@@ -58,6 +61,7 @@ export const LastPosts = () => {
       <Heading size="xl" mb={8}>
         Últimas Postagens
       </Heading>
+
       <Flex direction="column" gap={4}>
         {isLoading ? (
           <Spinner mx="auto" mt={8} size="lg" />
@@ -81,13 +85,27 @@ export const LastPosts = () => {
 
       {!isEmptyListPosts && (
         <Flex alignItems="center" gap={2} justifyContent="flex-end" mt={4}>
-          <Button onClick={backPage} colorScheme="blue" isDisabled={isFetching}>
-            Anterior
-          </Button>
-          <Text>Página Atual: {currentPage}</Text>
-          <Button onClick={nextPage} colorScheme="blue" isDisabled={isFetching}>
-            Próxima
-          </Button>
+          {isExistsBackPage && (
+            <IconButton
+              colorScheme="blue"
+              aria-label="Próxima página"
+              icon={<IoChevronBack fontSize={20} />}
+              isDisabled={isFetching}
+              onClick={backPage}
+            />
+          )}
+
+          <Text>Página {currentPage}</Text>
+
+          {isExistsNextPage && (
+            <IconButton
+              colorScheme="blue"
+              aria-label="Próxima página"
+              icon={<IoChevronForward fontSize={20} />}
+              isDisabled={isFetching}
+              onClick={nextPage}
+            />
+          )}
         </Flex>
       )}
     </Box>

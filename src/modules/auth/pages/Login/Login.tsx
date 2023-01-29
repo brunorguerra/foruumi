@@ -1,7 +1,7 @@
 import { Box, Flex, Heading, Link as ChakraLink, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 
-import { LoginForm } from './components/LoginForm';
+import { LoginForm } from './components';
 
 export const Login = () => {
   return (

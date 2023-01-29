@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Input, Text, Textarea, useToast } from '@chakra-ui/react';
+import { Button, Flex, useToast } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
@@ -6,12 +6,17 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { api } from '@/lib/axios';
+import { TextAreaForm, TextInput } from '@/modules/forum/components';
 
 import { createPostFormSchema } from './schema';
 
 type CreatePostFormData = z.infer<typeof createPostFormSchema>;
 
 export const CreatePost = () => {
+  const session = useSession();
+  const toast = useToast();
+  const queryClient = useQueryClient();
+
   const {
     reset,
     register,
@@ -21,19 +26,8 @@ export const CreatePost = () => {
     resolver: zodResolver(createPostFormSchema),
   });
 
-  const session = useSession();
-  const toast = useToast();
-  const queryClient = useQueryClient();
-
   const { mutateAsync, isLoading } = useMutation(
-    async (data: CreatePostFormData) => {
-      const res = await api.post('/posts/create', {
-        email: session.data?.user?.email,
-        title: data.title,
-        content: data.content,
-      });
-      return await res.data;
-    },
+    async (data: CreatePostFormData) => requestCreatePost(data),
     {
       onSuccess: () => {
         queryClient.invalidateQueries(['post-list']);
@@ -59,47 +53,33 @@ export const CreatePost = () => {
     },
   );
 
+  async function requestCreatePost(data: CreatePostFormData) {
+    const res = await api.post('/posts/create', {
+      email: session.data?.user?.email,
+      title: data.title,
+      content: data.content,
+    });
+    return await res.data;
+  }
+
   async function handleMutateSubmit(data: CreatePostFormData) {
     await mutateAsync(data);
   }
 
   return (
     <Flex as="form" direction="column" gap={4} onSubmit={handleSubmit(handleMutateSubmit)}>
-      <Box>
-        <Input
-          type="text"
-          placeholder="Escreva um título"
-          size="lg"
-          variant="outline"
-          errorBorderColor="red.500"
-          isInvalid={!!errors.title?.message}
-          {...register('title')}
-        />
+      <TextInput
+        type="text"
+        placeholder="Escreva um título"
+        error={errors.title}
+        {...register('title')}
+      />
 
-        {errors.title?.message && (
-          <Text fontSize="md" color="red.500">
-            {errors.title.message}
-          </Text>
-        )}
-      </Box>
-
-      <Box>
-        <Textarea
-          placeholder="O que você esta pensando?"
-          backgroundColor="transparent"
-          resize="none"
-          minH={40}
-          errorBorderColor="red.500"
-          isInvalid={!!errors.content?.message}
-          {...register('content')}
-        />
-
-        {errors.content?.message && (
-          <Text fontSize="md" color="red.500">
-            {errors.content.message}
-          </Text>
-        )}
-      </Box>
+      <TextAreaForm
+        placeholder="O que você esta pensando?"
+        error={errors.content}
+        {...register('content')}
+      />
 
       <Button
         type="submit"
