@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/router';
 import { signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { type z } from 'zod';
 
 import { PasswordInput, TextInput } from '@/modules/auth/components';
 
@@ -44,7 +44,7 @@ export const LoginForm = () => {
 
     return toast({
       title: 'Erro ao tentar se conectar',
-      description: res?.error,
+      description: 'Credenciais incorreta, tente novamente.',
       status: 'error',
       duration: 4000,
       isClosable: true,

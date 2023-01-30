@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { type NextApiRequest, type NextApiResponse } from 'next';
 
 import { prisma } from '@/lib/prisma';
 
@@ -39,7 +39,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     take: 2,
   });
 
-  return res.status(200).json({
+  res.status(200).json({
     posts,
     info: {
       currentPage,

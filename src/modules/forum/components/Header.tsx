@@ -1,14 +1,10 @@
 import { Box, Button, Flex, Heading } from '@chakra-ui/react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { signOut } from 'next-auth/react';
 
 export const Header = () => {
-  const router = useRouter();
-
   async function logout() {
-    await signOut();
-    await router.push('/login');
+    await signOut({ callbackUrl: `${process.env.NEXT_PUBLIC_AUTH_URL}/login` });
   }
 
   return (

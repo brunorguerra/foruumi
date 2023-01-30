@@ -1,11 +1,11 @@
 import { Box, Button, Input, InputGroup, InputRightElement, Text } from '@chakra-ui/react';
-import { forwardRef, ForwardRefRenderFunction, HTMLAttributes, useState } from 'react';
-import { FieldError } from 'react-hook-form';
+import { forwardRef, type ForwardRefRenderFunction, type HTMLAttributes, useState } from 'react';
+import { type FieldError } from 'react-hook-form';
 
-interface TextInputProps extends HTMLAttributes<HTMLInputElement> {
+type TextInputProps = {
   label: string;
   error?: FieldError | null;
-}
+} & HTMLAttributes<HTMLInputElement>;
 
 const PasswordInputElement: ForwardRefRenderFunction<HTMLInputElement, TextInputProps> = (
   { label, error = null, ...props },

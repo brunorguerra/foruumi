@@ -1,10 +1,10 @@
 import { Box, Text, Textarea } from '@chakra-ui/react';
-import { forwardRef, ForwardRefRenderFunction, HTMLAttributes } from 'react';
-import { FieldError } from 'react-hook-form';
+import { forwardRef, type ForwardRefRenderFunction, type HTMLAttributes } from 'react';
+import { type FieldError } from 'react-hook-form';
 
-interface TextareaFormProps extends HTMLAttributes<HTMLTextAreaElement> {
+type TextareaFormProps = {
   error?: FieldError | null;
-}
+} & HTMLAttributes<HTMLTextAreaElement>;
 
 const TextAreaFormElement: ForwardRefRenderFunction<HTMLTextAreaElement, TextareaFormProps> = (
   { error = null, ...props },

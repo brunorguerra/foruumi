@@ -1,4 +1,4 @@
-import { GetServerSideProps } from 'next';
+import { type GetServerSideProps } from 'next';
 import { unstable_getServerSession } from 'next-auth';
 
 import { Post as ForumPost } from '@/modules/forum';

@@ -1,8 +1,7 @@
-import NextAuth, { NextAuthOptions } from 'next-auth';
+import NextAuth, { type NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
-import { NEXTAUTH_SECRET } from '@/config';
-import { prisma } from '@/lib/prisma';
+import { api } from '@/lib/axios';
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -11,30 +10,45 @@ export const authOptions: NextAuthOptions = {
 
       credentials: {},
       async authorize(credentials) {
-        const { email, password } = credentials as { email: string; password: string };
+        const { email, password } = credentials as {
+          email: string;
+          password: string;
+        };
 
-        const user = await prisma.user.findFirst({
-          where: {
-            email,
-            password,
-          },
-        });
+        const res = await api.post('/login', { email, password });
+        const { user } = await res.data;
 
         if (user) {
-          return { ...user };
+          return user;
         }
 
-        throw new Error('Credenciais incorreto');
+        return null;
       },
     }),
   ],
+  callbacks: {
+    jwt: async ({ token, user }) => {
+      if (user) {
+        token.id = user.id;
+      }
+
+      return token;
+    },
+    session: ({ session, token }) => {
+      if (token) {
+        session.user.id = token.id as string;
+      }
+
+      return session;
+    },
+  },
   pages: {
     signIn: '/login',
   },
   session: {
     maxAge: 60 * 60 * 1, // 1 hour
   },
-  secret: NEXTAUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
 };
 
 export default NextAuth(authOptions);

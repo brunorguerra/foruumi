@@ -3,9 +3,9 @@ import { z } from 'zod';
 
 import { prisma } from '@/lib/prisma';
 
-const createPostSchema = z.object({
-  id: z.string().min(24),
-  title: z.string().min(1),
+const createCommentSchema = z.object({
+  postId: z.string().min(1),
+  userId: z.string().min(24),
   content: z.string().min(1),
 });
 
@@ -14,20 +14,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(403).end();
   }
 
-  const { id, title, content } = createPostSchema.parse(req.body);
+  const { userId, postId, content } = createCommentSchema.parse(req.body);
 
   try {
-    await prisma.post.create({
+    await prisma.comment.create({
       data: {
-        title,
+        postId,
         content,
-        user_id: id,
+        user_id: userId,
       },
     });
 
-    res.status(201).json({ message: 'Post created!' });
+    res.status(201).json({ message: 'Comment created.' });
     return;
   } catch (error) {
-    res.status(400).json({ message: 'Ocurred error!' });
+    res.status(400).json({ message: 'Erro inesperado' });
   }
 }

@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { type z } from 'zod';
 
 import { api } from '@/lib/axios';
 import { TextAreaForm, TextInput } from '@/modules/forum/components';
@@ -27,7 +27,7 @@ export const CreatePost = () => {
   });
 
   const { mutateAsync, isLoading } = useMutation(
-    async (data: CreatePostFormData) => requestCreatePost(data),
+    async (data: CreatePostFormData) => await requestCreatePost(data),
     {
       onSuccess: () => {
         queryClient.invalidateQueries(['post-list']);
@@ -55,7 +55,7 @@ export const CreatePost = () => {
 
   async function requestCreatePost(data: CreatePostFormData) {
     const res = await api.post('/posts/create', {
-      email: session.data?.user?.email,
+      id: session.data?.user.id,
       title: data.title,
       content: data.content,
     });
