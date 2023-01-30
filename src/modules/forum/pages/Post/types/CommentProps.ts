@@ -3,6 +3,7 @@ export type CommentProps = {
   content: string;
   createdAt: string;
   author: {
+    id: string;
     name: string;
   };
 };

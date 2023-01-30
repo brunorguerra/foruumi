@@ -4,10 +4,11 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { type z } from 'zod';
 
 import { api } from '@/lib/axios';
 import { TextAreaForm } from '@/modules/forum/components';
+import { useCommentingStore } from '@/store/useCommentingStore';
 
 import { createCommentFormSchema } from './schema';
 
@@ -23,6 +24,10 @@ export const CreateComment = () => {
     resolver: zodResolver(createCommentFormSchema),
   });
 
+  const handleIsCommenting = useCommentingStore(
+    (state) => state.handleIsCommenting
+  );
+
   const queryClient = useQueryClient();
   const toast = useToast();
   const session = useSession();
@@ -30,10 +35,11 @@ export const CreateComment = () => {
   const { postId } = router.query;
 
   const { mutateAsync, isLoading } = useMutation(
-    async (data: CreateCommentFormData) => requestCreateComment(data),
+    async (data: CreateCommentFormData) => await requestCreateComment(data),
     {
       onSuccess: () => {
         queryClient.invalidateQueries(['post']);
+        handleIsCommenting();
 
         toast({
           title: 'Comentário criado.',
@@ -53,13 +59,13 @@ export const CreateComment = () => {
           isClosable: true,
         });
       },
-    },
+    }
   );
 
   async function requestCreateComment(data: CreateCommentFormData) {
-    const res = await api.post('/posts/create-comment', {
+    const res = await api.post('/posts/comment/create', {
       postId,
-      email: session.data?.user?.email,
+      userId: session.data?.user.id,
       content: data.content,
     });
     return await res.data;
@@ -70,7 +76,12 @@ export const CreateComment = () => {
   }
 
   return (
-    <Flex as="form" direction="column" gap={4} onSubmit={handleSubmit(handleMutateSubmit)}>
+    <Flex
+      as="form"
+      direction="column"
+      gap={4}
+      onSubmit={handleSubmit(handleMutateSubmit)}
+    >
       <TextAreaForm
         placeholder="O que você esta pensando?"
         error={errors.content}

@@ -1,34 +1,41 @@
-import { Box, Flex, Heading, IconButton, Spinner, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Heading,
+  IconButton,
+  Spinner,
+  Text,
+} from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useState } from 'react';
 import { IoChevronBack, IoChevronForward } from 'react-icons/io5';
 
 import { api } from '@/lib/axios';
-import { PostProps } from '@/modules/forum/types/Post';
+import { type PostProps } from '@/modules/forum/types/Post';
 
 import { Header } from '../../components';
 
 import { PostBox, CreatePost } from './components';
 
-interface ListPostsProps {
+type ListPostsProps = {
   posts: PostProps[];
   info: {
     currentPage: number;
     pages: number;
     posts: number;
   };
-}
+};
 
 export const LastPosts = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const { data, isLoading, isFetching } = useQuery(
     ['post-list', currentPage],
-    () => getListPosts(currentPage),
+    async () => await getListPosts(currentPage),
     {
       keepPreviousData: true,
       staleTime: 1000 * 60 * 5, // 5 minutes
-    },
+    }
   );
 
   const isEmptyListPosts = (data?.posts.length ?? 0) <= 0;

@@ -8,7 +8,10 @@ import '@/styles/globals.css';
 import { queryClient } from '@/lib/react-query';
 import { Fonts, theme } from '@/styles';
 
-export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppProps) {
   return (
     <ChakraProvider theme={theme}>
       <Fonts />

@@ -11,7 +11,7 @@ const customVariant = ({
 }: any) => {
   return {
     bg,
-    color: color,
+    color,
     _focus: {
       boxShadow: boxShadowFocus,
     },

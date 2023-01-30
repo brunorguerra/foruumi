@@ -1,16 +1,28 @@
-import { Box, Button, Input, InputGroup, InputRightElement, Text } from '@chakra-ui/react';
-import { forwardRef, ForwardRefRenderFunction, HTMLAttributes, useState } from 'react';
-import { FieldError } from 'react-hook-form';
+import {
+  Box,
+  Button,
+  Input,
+  InputGroup,
+  InputRightElement,
+  Text,
+} from '@chakra-ui/react';
+import {
+  forwardRef,
+  type ForwardRefRenderFunction,
+  type HTMLAttributes,
+  useState,
+} from 'react';
+import { type FieldError } from 'react-hook-form';
 
-interface TextInputProps extends HTMLAttributes<HTMLInputElement> {
+type TextInputProps = {
   label: string;
   error?: FieldError | null;
-}
+} & HTMLAttributes<HTMLInputElement>;
 
-const PasswordInputElement: ForwardRefRenderFunction<HTMLInputElement, TextInputProps> = (
-  { label, error = null, ...props },
-  ref,
-) => {
+const PasswordInputElement: ForwardRefRenderFunction<
+  HTMLInputElement,
+  TextInputProps
+> = ({ label, error = null, ...props }, ref) => {
   const [isShowPassword, setIsShowPassword] = useState(false);
 
   function handleShowPassword() {
@@ -36,7 +48,12 @@ const PasswordInputElement: ForwardRefRenderFunction<HTMLInputElement, TextInput
         />
 
         <InputRightElement width="4.5rem" h="100%">
-          <Button type="button" size="sm" variant="unstyled" onClick={handleShowPassword}>
+          <Button
+            type="button"
+            size="sm"
+            variant="unstyled"
+            onClick={handleShowPassword}
+          >
             {isShowPassword ? 'Ocultar' : 'Mostrar'}
           </Button>
         </InputRightElement>

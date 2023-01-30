@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { type NextApiRequest, type NextApiResponse } from 'next';
 import { z } from 'zod';
 
 import { prisma } from '@/lib/prisma';
@@ -9,7 +9,10 @@ const LoginSchema = z.object({
   password: z.string().min(3),
 });
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   if (req.method !== 'POST') {
     return res.status(403).end();
   }
@@ -23,7 +26,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   });
 
   if (userExists) {
-    return res.status(400).json({ message: 'Email already taken.' });
+    res.status(400).json({ message: 'Email already taken.' });
+    return;
   }
 
   const user = await prisma.user.create({
@@ -34,5 +38,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     },
   });
 
-  return res.status(201).json(user);
+  res.status(201).json(user);
 }

@@ -5,7 +5,12 @@ import { RegisterForm } from './components';
 
 export const Register = () => {
   return (
-    <Flex alignItems="center" justifyContent="center" direction="column" height="100vh">
+    <Flex
+      alignItems="center"
+      justifyContent="center"
+      direction="column"
+      height="100vh"
+    >
       <Box>
         <Heading marginBottom={8}>Criar conta na Plataforma</Heading>
 

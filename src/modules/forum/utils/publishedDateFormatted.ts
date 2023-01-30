@@ -1,7 +1,7 @@
-import { format, Locale } from 'date-fns';
+import ptBR, { format } from 'date-fns';
 
-export function publishedDateFormatted(publishedAt: string, locale: Locale) {
+export function publishedDateFormatted(publishedAt: string) {
   return format(new Date(publishedAt), "d 'de' LLLL 'às' HH:mm'h'", {
-    locale,
+    locale: ptBR,
   });
 }

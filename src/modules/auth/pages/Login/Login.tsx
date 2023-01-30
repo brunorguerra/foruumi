@@ -5,7 +5,12 @@ import { LoginForm } from './components';
 
 export const Login = () => {
   return (
-    <Flex alignItems="center" justifyContent="center" direction="column" height="100vh">
+    <Flex
+      alignItems="center"
+      justifyContent="center"
+      direction="column"
+      height="100vh"
+    >
       <Box>
         <Heading marginBottom={8}>Entrar na plataforma</Heading>
 
