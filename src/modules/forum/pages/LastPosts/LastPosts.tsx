@@ -1,11 +1,4 @@
-import {
-  Box,
-  Flex,
-  Heading,
-  IconButton,
-  Spinner,
-  Text,
-} from '@chakra-ui/react';
+import { Box, Flex, Heading, IconButton, Spinner, Text } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -35,7 +28,7 @@ export const LastPosts = () => {
     {
       keepPreviousData: true,
       staleTime: 1000 * 60 * 5, // 5 minutes
-    }
+    },
   );
 
   const isEmptyListPosts = (data?.posts.length ?? 0) <= 0;

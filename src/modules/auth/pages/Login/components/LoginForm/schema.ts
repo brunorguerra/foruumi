@@ -9,7 +9,5 @@ export const loginFormSchema = z.object({
     .email({
       message: 'Digite um email válido',
     }),
-  password: z
-    .string()
-    .min(3, { message: 'Digite sua senha, mínimo de três caracteres' }),
+  password: z.string().min(3, { message: 'Digite sua senha, mínimo de três caracteres' }),
 });

@@ -53,13 +53,7 @@ export const LoginForm = () => {
 
   return (
     <Flex as="form" direction="column" gap={4} onSubmit={handleSubmit(login)}>
-      <TextInput
-        id="email"
-        label="Email"
-        type="text"
-        error={errors.email}
-        {...register('email')}
-      />
+      <TextInput id="email" label="Email" type="text" error={errors.email} {...register('email')} />
 
       <PasswordInput
         id="password"

@@ -62,26 +62,9 @@ export const RegisterForm = () => {
   }
 
   return (
-    <Flex
-      as="form"
-      direction="column"
-      gap={4}
-      onSubmit={handleSubmit(createUser)}
-    >
-      <TextInput
-        id="name"
-        label="Nome"
-        type="text"
-        error={errors.name}
-        {...register('name')}
-      />
-      <TextInput
-        id="email"
-        label="Email"
-        type="text"
-        error={errors.email}
-        {...register('email')}
-      />
+    <Flex as="form" direction="column" gap={4} onSubmit={handleSubmit(createUser)}>
+      <TextInput id="name" label="Nome" type="text" error={errors.name} {...register('name')} />
+      <TextInput id="email" label="Email" type="text" error={errors.email} {...register('email')} />
 
       <PasswordInput
         id="password"

@@ -9,11 +9,7 @@ export default function Post({ postId }: { postId: string }) {
   return <ForumPost postId={postId} />;
 }
 
-export const getServerSideProps: GetServerSideProps = async ({
-  query,
-  req,
-  res,
-}) => {
+export const getServerSideProps: GetServerSideProps = async ({ query, req, res }) => {
   const { postId } = query;
   const session = await unstable_getServerSession(req, res, authOptions);
 

@@ -1,9 +1,5 @@
 import { Box, Input, Text } from '@chakra-ui/react';
-import {
-  forwardRef,
-  type ForwardRefRenderFunction,
-  type HTMLAttributes,
-} from 'react';
+import { forwardRef, type ForwardRefRenderFunction, type HTMLAttributes } from 'react';
 import { type FieldError } from 'react-hook-form';
 
 type TextInputProps = {
@@ -11,10 +7,10 @@ type TextInputProps = {
   error?: FieldError | null;
 } & HTMLAttributes<HTMLInputElement>;
 
-const TextInputElement: ForwardRefRenderFunction<
-  HTMLInputElement,
-  TextInputProps
-> = ({ type, error = null, ...props }, ref) => {
+const TextInputElement: ForwardRefRenderFunction<HTMLInputElement, TextInputProps> = (
+  { type, error = null, ...props },
+  ref,
+) => {
   return (
     <Box>
       <Input

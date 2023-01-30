@@ -10,12 +10,7 @@ type PostBoxProps = {
   createdAt: string;
 };
 
-export const PostBox = ({
-  title,
-  content,
-  author,
-  createdAt,
-}: PostBoxProps) => {
+export const PostBox = ({ title, content, author, createdAt }: PostBoxProps) => {
   const session = useSession();
 
   return (
@@ -34,8 +29,7 @@ export const PostBox = ({
     >
       <Flex alignItems="center" justifyContent="space-between">
         <Text fontSize="md">
-          Author:{' '}
-          {author === session.data?.user.name ? `${author} (Você)` : author}
+          Author: {author === session.data?.user.name ? `${author} (Você)` : author}
         </Text>
         <Text>{publishedDateFormatted(createdAt)}</Text>
       </Flex>

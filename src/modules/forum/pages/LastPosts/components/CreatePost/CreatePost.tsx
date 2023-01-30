@@ -50,7 +50,7 @@ export const CreatePost = () => {
           isClosable: true,
         });
       },
-    }
+    },
   );
 
   async function requestCreatePost(data: CreatePostFormData) {
@@ -67,12 +67,7 @@ export const CreatePost = () => {
   }
 
   return (
-    <Flex
-      as="form"
-      direction="column"
-      gap={4}
-      onSubmit={handleSubmit(handleMutateSubmit)}
-    >
+    <Flex as="form" direction="column" gap={4} onSubmit={handleSubmit(handleMutateSubmit)}>
       <TextInput
         type="text"
         placeholder="Escreva um título"

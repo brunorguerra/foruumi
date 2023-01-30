@@ -24,9 +24,7 @@ export const CreateComment = () => {
     resolver: zodResolver(createCommentFormSchema),
   });
 
-  const handleIsCommenting = useCommentingStore(
-    (state) => state.handleIsCommenting
-  );
+  const handleIsCommenting = useCommentingStore((state) => state.handleIsCommenting);
 
   const queryClient = useQueryClient();
   const toast = useToast();
@@ -59,7 +57,7 @@ export const CreateComment = () => {
           isClosable: true,
         });
       },
-    }
+    },
   );
 
   async function requestCreateComment(data: CreateCommentFormData) {
@@ -76,12 +74,7 @@ export const CreateComment = () => {
   }
 
   return (
-    <Flex
-      as="form"
-      direction="column"
-      gap={4}
-      onSubmit={handleSubmit(handleMutateSubmit)}
-    >
+    <Flex as="form" direction="column" gap={4} onSubmit={handleSubmit(handleMutateSubmit)}>
       <TextAreaForm
         placeholder="O que você esta pensando?"
         error={errors.content}

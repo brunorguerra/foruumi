@@ -42,10 +42,7 @@ export const Post = ({ postId }: { postId: string }) => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const { data, isLoading, isFetching, isError } = useQuery(
-    ['post'],
-    getPostData
-  );
+  const { data, isLoading, isFetching, isError } = useQuery(['post'], getPostData);
   const { mutate, isLoading: isDeleting } = useMutation(DeletePost, {
     onSuccess: async () => {
       await queryClient.invalidateQueries(['post-list']);
@@ -112,25 +109,14 @@ export const Post = ({ postId }: { postId: string }) => {
         <Box maxW={1200} mx="auto" py={8}>
           <Header />
 
-          <Flex
-            direction="column"
-            alignItems="center"
-            justifyContent="center"
-            h={500}
-            gap={4}
-          >
+          <Flex direction="column" alignItems="center" justifyContent="center" h={500} gap={4}>
             <Heading>Postagem Indisponível</Heading>
             <Text fontSize="xl">
-              Este Post pode ter sido removido ou está temporariamente
-              indisponível.
+              Este Post pode ter sido removido ou está temporariamente indisponível.
             </Text>
 
             <Link href="/">
-              <Button
-                leftIcon={<IoReturnDownBackSharp fontSize={20} />}
-                mt={16}
-                colorScheme="blue"
-              >
+              <Button leftIcon={<IoReturnDownBackSharp fontSize={20} />} mt={16} colorScheme="blue">
                 Voltar
               </Button>
             </Link>
@@ -150,11 +136,7 @@ export const Post = ({ postId }: { postId: string }) => {
         <Header />
 
         <Link href="/">
-          <Button
-            leftIcon={<IoReturnDownBackSharp fontSize={20} />}
-            mt={16}
-            colorScheme="blue"
-          >
+          <Button leftIcon={<IoReturnDownBackSharp fontSize={20} />} mt={16} colorScheme="blue">
             Voltar
           </Button>
         </Link>
@@ -171,14 +153,9 @@ export const Post = ({ postId }: { postId: string }) => {
         >
           <Flex alignItems="center" justifyContent="space-between">
             <Text fontSize="md">
-              Author:{' '}
-              {postAuthorIsCurrentUser
-                ? `${data.author.name} (Você)`
-                : data.author.name}
+              Author: {postAuthorIsCurrentUser ? `${data.author.name} (Você)` : data.author.name}
             </Text>
-            <Text>
-              {data.createdAt && publishedDateFormatted(data.createdAt)}
-            </Text>
+            <Text>{data.createdAt && publishedDateFormatted(data.createdAt)}</Text>
           </Flex>
 
           <Box>
@@ -202,8 +179,7 @@ export const Post = ({ postId }: { postId: string }) => {
                   <ModalHeader color="gray.900">Excluir Postagem</ModalHeader>
                   <ModalBody>
                     <Text color="gray.800" fontSize="lg">
-                      Você tem certeza que quer excluir esta postagem? esta ação
-                      é irreversível.
+                      Você tem certeza que quer excluir esta postagem? esta ação é irreversível.
                     </Text>
                   </ModalBody>
 
@@ -233,9 +209,7 @@ export const Post = ({ postId }: { postId: string }) => {
             <Heading size="md">Comentários</Heading>
 
             <Button colorScheme="blue" onClick={handleIsCommenting}>
-              {isCommenting
-                ? 'Cancelar Adição do comentário'
-                : 'Adicionar comentário'}
+              {isCommenting ? 'Cancelar Adição do comentário' : 'Adicionar comentário'}
             </Button>
           </Flex>
 

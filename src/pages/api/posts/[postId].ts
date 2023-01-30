@@ -2,10 +2,7 @@ import { type NextApiRequest, type NextApiResponse } from 'next';
 
 import { prisma } from '@/lib/prisma';
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { postId } = req.query;
 
   if (!postId) {

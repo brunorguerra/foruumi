@@ -29,13 +29,7 @@ type CommentProps = {
   };
 };
 
-export const Comment = ({
-  id,
-  content,
-  createdAt,
-  postAuthorId,
-  author,
-}: CommentProps) => {
+export const Comment = ({ id, content, createdAt, postAuthorId, author }: CommentProps) => {
   const session = useSession();
   const toast = useToast();
   const queryClient = useQueryClient();
@@ -43,8 +37,7 @@ export const Comment = ({
 
   const commentAuthorIsCurrentUser = author.id === session.data?.user.id;
   const commentAuthorOrPostAuthorIsCurrentUser =
-    author.id === session.data?.user.id ||
-    postAuthorId === session.data?.user.id;
+    author.id === session.data?.user.id || postAuthorId === session.data?.user.id;
 
   const { mutate, isLoading } = useMutation(requestDeleteComment, {
     onSuccess: () => {
@@ -105,8 +98,7 @@ export const Comment = ({
                 <ModalHeader color="gray.900">Excluir Comentário</ModalHeader>
                 <ModalBody>
                   <Text color="gray.800" fontSize="lg">
-                    Você tem certeza que quer excluir este comentário? esta ação
-                    é irreversível.
+                    Você tem certeza que quer excluir este comentário? esta ação é irreversível.
                   </Text>
                 </ModalBody>
 
