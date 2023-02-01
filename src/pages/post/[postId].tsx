@@ -10,10 +10,10 @@ export default function Post({ postId }: { postId: string }) {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query, req, res }) => {
-  const { postId } = query;
   const session = await unstable_getServerSession(req, res, authOptions);
+  const { postId } = query;
 
-  if (!session?.user) {
+  if (!session?.user.id) {
     return {
       redirect: {
         destination: '/login',
