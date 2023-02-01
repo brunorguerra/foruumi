@@ -1,7 +1,7 @@
 import NextAuth, { type NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
-import { api } from '@/lib/axios';
+import { prisma } from '@/lib/prisma';
 
 interface CredentialsProps {
   email: string;
@@ -17,8 +17,18 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         const { email, password } = credentials as CredentialsProps;
 
-        const res = await api.post('/login', { email, password });
-        const { user } = await res.data;
+        const user = await prisma.user.findFirst({
+          where: {
+            email,
+            password,
+          },
+
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        });
 
         if (user) {
           return user;
