@@ -21,7 +21,7 @@ export default function Home() {
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await unstable_getServerSession(req, res, authOptions);
 
-  if (!session?.user) {
+  if (!session?.user.id) {
     return {
       redirect: {
         destination: '/login',
