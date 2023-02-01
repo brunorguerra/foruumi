@@ -1,8 +1,16 @@
 import { type NextApiRequest, type NextApiResponse } from 'next';
+import { getServerSession } from 'next-auth/next';
 
-import { prisma } from '@/lib/prisma';
+import { authOptions } from '@/lib/next-auth';
+import prisma from '@/lib/prisma';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const session = await getServerSession(req, res, authOptions);
+
+  if (!session) {
+    return res.status(401).json({ message: 'You must be logged in.' });
+  }
+
   if (req.method !== 'DELETE') {
     return res.status(403).end();
   }

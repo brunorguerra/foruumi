@@ -1,7 +1,9 @@
 import { type NextApiRequest, type NextApiResponse } from 'next';
+import { getServerSession } from 'next-auth/next';
 import { z } from 'zod';
 
-import { prisma } from '@/lib/prisma';
+import { authOptions } from '@/lib/next-auth';
+import prisma from '@/lib/prisma';
 
 const createPostSchema = z.object({
   id: z.string().min(24),
@@ -12,6 +14,12 @@ const createPostSchema = z.object({
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
     return res.status(403).end();
+  }
+
+  const session = await getServerSession(req, res, authOptions);
+
+  if (!session) {
+    return res.status(401).json({ message: 'You must be logged in.' });
   }
 
   const { id, title, content } = createPostSchema.parse(req.body);
