@@ -1,7 +1,7 @@
 import { type NextApiRequest, type NextApiResponse } from 'next';
 import { z } from 'zod';
 
-import { prisma } from '@/lib/prisma';
+import prisma from '@/lib/prisma';
 
 const LoginSchema = z.object({
   name: z.string().min(2),

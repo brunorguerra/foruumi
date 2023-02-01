@@ -1,10 +1,18 @@
 import { type NextApiRequest, type NextApiResponse } from 'next';
+import { getServerSession } from 'next-auth/next';
 
-import { prisma } from '@/lib/prisma';
+import { authOptions } from '@/lib/next-auth';
+import prisma from '@/lib/prisma';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'GET') {
     return res.status(403).end();
+  }
+
+  const session = await getServerSession(req, res, authOptions);
+
+  if (!session) {
+    return res.status(401).json({ message: 'You must be logged in.' });
   }
 
   const { page } = req.query;

@@ -1,10 +1,9 @@
 import { type GetServerSideProps } from 'next';
 import Head from 'next/head';
-import { unstable_getServerSession } from 'next-auth';
+import { getServerSession } from 'next-auth/next';
 
+import { authOptions } from '@/lib/next-auth';
 import { Login as AuthLogin } from '@/modules/auth';
-
-import { authOptions } from '../api/auth/[...nextauth]';
 
 export default function Login() {
   return (
@@ -18,7 +17,7 @@ export default function Login() {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const session = await unstable_getServerSession(req, res, authOptions);
+  const session = await getServerSession(req, res, authOptions);
 
   if (session?.user) {
     return {
@@ -31,13 +30,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
   return {
     props: {
-      session: {
-        ...session,
-
-        user: {
-          image: null,
-        },
-      },
+      session,
     },
   };
 };
