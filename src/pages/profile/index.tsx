@@ -1,20 +1,11 @@
-import { type GetServerSideProps } from 'next';
-import Head from 'next/head';
+import { GetServerSideProps } from 'next';
 import { getServerSession } from 'next-auth/next';
 
 import { authOptions } from '@/lib/next-auth';
-import { LastPosts } from '@/modules/forum';
+import { Profile as MyProfile } from '@/modules/forum/pages';
 
-export default function Home() {
-  return (
-    <>
-      <Head>
-        <title>Foruumi - Página inicial</title>
-      </Head>
-
-      <LastPosts />
-    </>
-  );
+export default function Profile() {
+  return <MyProfile />;
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {

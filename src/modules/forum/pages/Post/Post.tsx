@@ -112,7 +112,7 @@ export const Post = ({ postId }: { postId: string }) => {
           <Flex direction="column" alignItems="center" justifyContent="center" h={500} gap={4}>
             <Heading>Postagem Indisponível</Heading>
             <Text fontSize="xl">
-              Este Post pode ter sido removido ou está temporariamente indisponível.
+              Este Post pode ter sido removido, está temporariamente indisponível ou não existe.
             </Text>
 
             <Link href="/">

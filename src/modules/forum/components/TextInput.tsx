@@ -12,7 +12,7 @@ const TextInputElement: ForwardRefRenderFunction<HTMLInputElement, TextInputProp
   ref,
 ) => {
   return (
-    <Box>
+    <Box w="100%">
       <Input
         type={type}
         placeholder={props.placeholder}
