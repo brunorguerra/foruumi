@@ -1,6 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import { getServerSession } from 'next-auth/next';
 import { z } from 'zod';
 
+import { authOptions } from '@/lib/next-auth';
 import prisma from '@/lib/prisma';
 
 const userFormPutSchema = z.object({
@@ -11,6 +13,12 @@ const userFormPutSchema = z.object({
 });
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const session = await getServerSession(req, res, authOptions);
+
+  if (!session) {
+    return res.status(401).json({ message: 'You must be logged in.' });
+  }
+
   const { userId } = req.query;
 
   if (req.method === 'PUT') {
