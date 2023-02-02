@@ -152,7 +152,7 @@ export const Post = ({ postId }: { postId: string }) => {
           backgroundColor="gray.100"
         >
           <Flex alignItems="center" justifyContent="space-between">
-            <Text fontSize="md">
+            <Text fontSize="md" textTransform="capitalize">
               Author: {postAuthorIsCurrentUser ? `${data.author.name} (Você)` : data.author.name}
             </Text>
             <Text>{data.createdAt && publishedDateFormatted(data.createdAt)}</Text>
