@@ -20,15 +20,17 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     };
   }
 
+  const newSession = {
+    ...session,
+    user: {
+      ...session.user,
+      image: null,
+    },
+  };
+
   return {
     props: {
-      session: {
-        ...session,
-
-        user: {
-          image: null,
-        },
-      },
+      session: newSession,
     },
   };
 };
