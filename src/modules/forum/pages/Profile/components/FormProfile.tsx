@@ -4,7 +4,7 @@ import { signOut, useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { TextInput } from '@/components';
+import { PasswordInput, TextInput } from '@/components';
 import { useUpdateProfile } from '@/modules/forum/hooks/useUpdateProfile';
 import { updateProfileFormSchema } from '@/modules/forum/schemas';
 import { UpdateProfileFormData } from '@/modules/forum/types';
@@ -45,8 +45,7 @@ export const FormProfile = () => {
       <Flex direction="column" gap={8}>
         <Flex gap={4}>
           <TextInput type="text" placeholder="Nome" error={errors.name} {...register('name')} />
-          <TextInput
-            type="password"
+          <PasswordInput
             placeholder="Senha atual"
             error={errors.currentPassword}
             {...register('currentPassword')}
@@ -56,8 +55,7 @@ export const FormProfile = () => {
         <Flex gap={4}>
           <TextInput type="text" placeholder="Email" error={errors.email} {...register('email')} />
 
-          <TextInput
-            type="password"
+          <PasswordInput
             placeholder="Nova senha (Opcional)"
             error={errors.newPassword}
             {...register('newPassword')}
