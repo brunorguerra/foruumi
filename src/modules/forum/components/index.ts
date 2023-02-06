@@ -1,3 +1,3 @@
 export * from './Header';
-export * from './TextInput';
-export * from './TextAreaForm';
+export * from './Layout';
+export * from './PostContainer';
