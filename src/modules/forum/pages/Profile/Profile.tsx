@@ -1,9 +1,9 @@
-import { Box, Button, Flex, Heading } from '@chakra-ui/react';
+import { Button, Flex, Heading } from '@chakra-ui/react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { IoReturnDownBackSharp } from 'react-icons/io5';
 
-import { Header } from '../../components';
+import { Layout } from '../../components';
 
 import { FormProfile } from './components';
 
@@ -14,9 +14,7 @@ export const Profile = () => {
         <title>Foruumi - Meu Perfil</title>
       </Head>
 
-      <Box maxW={1200} mx="auto" py={8}>
-        <Header />
-
+      <Layout>
         <Link href="/">
           <Button leftIcon={<IoReturnDownBackSharp fontSize={20} />} mt={16} colorScheme="blue">
             Voltar
@@ -28,7 +26,7 @@ export const Profile = () => {
 
           <FormProfile />
         </Flex>
-      </Box>
+      </Layout>
     </>
   );
 };

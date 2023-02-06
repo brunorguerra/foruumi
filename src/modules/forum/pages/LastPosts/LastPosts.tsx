@@ -1,45 +1,21 @@
-import { Box, Flex, Heading, IconButton, Spinner, Text } from '@chakra-ui/react';
-import { useQuery } from '@tanstack/react-query';
+import { Flex, Heading, IconButton, Spinner, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useState } from 'react';
 import { IoChevronBack, IoChevronForward } from 'react-icons/io5';
 
-import { api } from '@/lib/axios';
-import { type PostProps } from '@/modules/forum/types/Post';
+import { Layout, PostContainer } from '../../components';
+import { useGetListPosts } from '../../hooks/useGetListPosts';
 
-import { Header } from '../../components';
-
-import { PostBox, CreatePost } from './components';
-
-type ListPostsProps = {
-  posts: PostProps[];
-  info: {
-    currentPage: number;
-    pages: number;
-    posts: number;
-  };
-};
+import { CreatePost } from './components';
 
 export const LastPosts = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const { data, isLoading, isFetching } = useQuery(
-    ['post-list', currentPage],
-    async () => await getListPosts(currentPage),
-    {
-      keepPreviousData: true,
-      staleTime: 1000 * 60 * 5, // 5 minutes
-    },
-  );
+
+  const { data, isLoading, isFetching } = useGetListPosts({ page: currentPage });
 
   const isEmptyListPosts = (data?.posts.length ?? 0) <= 0;
   const isExistsNextPage = !(currentPage >= Number(data?.info.pages));
   const isExistsBackPage = !(currentPage === 1);
-
-  async function getListPosts(page: number): Promise<ListPostsProps> {
-    const req = await api.get(`/posts?page=${page}`);
-    const data = await req.data;
-    return data;
-  }
 
   function backPage() {
     setCurrentPage((oldPage) => (isExistsBackPage ? oldPage - 1 : oldPage));
@@ -50,9 +26,7 @@ export const LastPosts = () => {
   }
 
   return (
-    <Box maxW={1200} margin="0 auto" py={12}>
-      <Header />
-
+    <Layout>
       <Flex mt={8} mb={16} direction="column" gap={8}>
         <Heading size="lg">Fazer postagem</Heading>
         <CreatePost />
@@ -72,10 +46,10 @@ export const LastPosts = () => {
         ) : (
           data?.posts.map((post) => (
             <Link href={`/post/${post.id}`} key={post.id}>
-              <PostBox
+              <PostContainer
+                author={post.author.name}
                 title={post.title}
                 content={post.content}
-                author={post.author.name}
                 createdAt={post.createdAt}
               />
             </Link>
@@ -108,6 +82,6 @@ export const LastPosts = () => {
           )}
         </Flex>
       )}
-    </Box>
+    </Layout>
   );
 };
