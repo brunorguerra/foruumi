@@ -18,7 +18,7 @@ const PasswordInputElement: ForwardRefRenderFunction<HTMLInputElement, TextInput
   }
 
   return (
-    <Box>
+    <Box w="100%">
       {label && (
         <Text as="label" htmlFor={props.id}>
           {label}
@@ -31,7 +31,7 @@ const PasswordInputElement: ForwardRefRenderFunction<HTMLInputElement, TextInput
           id={props.id}
           placeholder={props.placeholder}
           size="lg"
-          variant="filled"
+          variant={label ? 'filled' : 'outline'}
           errorBorderColor="red.500"
           isInvalid={!!error}
           ref={ref}
