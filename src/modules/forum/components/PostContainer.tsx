@@ -11,6 +11,7 @@ type PostProps = {
   createdAt: string;
   children?: ReactNode;
   asButtonDeleted?: boolean;
+  hasContentFull?: boolean;
 };
 
 export const PostContainer = ({
@@ -20,6 +21,7 @@ export const PostContainer = ({
   createdAt,
   children,
   asButtonDeleted = false,
+  hasContentFull = false,
 }: PostProps) => {
   const session = useSession();
   const postAuthorIsSessionCurrentUser = author === session.data?.user.name;
@@ -29,13 +31,13 @@ export const PostContainer = ({
       w="100%"
       p={4}
       border="2px solid"
-      borderColor={asButtonDeleted ? 'blue.600' : 'transparent'}
+      borderColor={hasContentFull ? 'blue.600' : 'transparent'}
       borderRadius={4}
       backgroundColor="gray.100"
-      cursor={asButtonDeleted ? 'initial' : 'pointer'}
+      cursor={hasContentFull ? 'initial' : 'pointer'}
       transition="all .2s ease"
       _hover={
-        asButtonDeleted
+        hasContentFull
           ? {}
           : {
               transform: 'translateY(-5%)',
@@ -55,16 +57,22 @@ export const PostContainer = ({
           {title}
         </Heading>
 
-        <Text
-          fontSize="xl"
-          marginTop={2}
-          overflow="hidden"
-          textOverflow="ellipsis"
-          whiteSpace="nowrap"
-          paddingRight={8}
-        >
-          {content}
-        </Text>
+        {hasContentFull ? (
+          <Text fontSize="xl" marginTop={2} paddingRight={8}>
+            {content}
+          </Text>
+        ) : (
+          <Text
+            fontSize="xl"
+            marginTop={2}
+            paddingRight={8}
+            overflow="hidden"
+            textOverflow="ellipsis"
+            whiteSpace="nowrap"
+          >
+            {content.slice(0, 150)}
+          </Text>
+        )}
       </Box>
 
       {asButtonDeleted && <Flex justifyContent="flex-end">{children}</Flex>}

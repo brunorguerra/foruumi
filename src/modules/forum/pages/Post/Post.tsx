@@ -99,6 +99,7 @@ export const Post = ({ postId }: { postId: string }) => {
           content={data.content}
           createdAt={data.createdAt}
           asButtonDeleted={postAuthorIsCurrentUser}
+          hasContentFull
         >
           <ButtonDeletePost isLoading={isDeleting} onClick={handleDeletePost} />
         </PostContainer>
